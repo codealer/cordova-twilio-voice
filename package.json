@@ -1,0 +1,17 @@
+{
+  "name": "cordova-plugin-twilio-voice",
+  "version": "1.0.1",
+  "description": "cordova plugin for twilio voice sdk",
+  "cordova": {
+    "id": "cordova-plugin-twilio-voice",
+    "platforms": [
+      "android"
+    ]
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android"
+  ],
+  "author": "Isa Frimpong",
+  "license": "ISC"
+}

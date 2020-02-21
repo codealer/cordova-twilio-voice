@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='utf-8'?>
+<plugin id="cordova-plugin-twilio-voice" version="1.0.1" xmlns="http://apache.org/cordova/ns/plugins/1.0" xmlns:android="http://schemas.android.com/apk/res/android">
+    <name>TwilioVoice</name>
+    <js-module name="TwilioVoice" src="www/TwilioVoice.js">
+        <clobbers target="cordova.plugins.TwilioVoice" />
+    </js-module>
+    <platform name="android">
+        <config-file parent="/*" target="res/xml/config.xml">
+            <feature name="TwilioVoice">
+                <param name="android-package" value="com.codealer.twiliovoice.TwilioVoice" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <config-file parent="/*" target="AndroidManifest.xml">
+            <uses-permission android:name="android.permission.RECORD_AUDIO" />
+        </config-file>
+        <source-file src="src/android/TwilioVoice.java" target-dir="src/com/codealer/twiliovoice" />
+        <source-file src="src/android/TwilioVoiceOutgoing.java" target-dir="src/com/codealer/twiliovoice" />
+        <source-file src="src/android/TwilioVoiceUtils.java" target-dir="src/com/codealer/twiliovoice" />
+        <framework src="com.twilio:voice-android:5.0.2" />
+        <framework src="com.google.code.gson:gson:2.8.6" />
+    </platform>
+</plugin>
