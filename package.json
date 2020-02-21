@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-twilio-voice",
+  "name": "cordova-twilio-voice",
   "version": "1.0.1",
   "description": "cordova plugin for twilio voice sdk",
   "cordova": {
-    "id": "cordova-plugin-twilio-voice",
+    "id": "cordova-twilio-voice",
     "platforms": [
       "android"
     ]
@@ -13,5 +13,16 @@
     "cordova-android"
   ],
   "author": "Isa Frimpong",
-  "license": "ISC"
+  "license": "ISC",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/codealer/cordova-twilio-voice.git"
+  },
+  "bugs": {
+    "url": "https://github.com/codealer/cordova-twilio-voice/issues"
+  },
+  "homepage": "https://github.com/codealer/cordova-twilio-voice#readme"
 }
