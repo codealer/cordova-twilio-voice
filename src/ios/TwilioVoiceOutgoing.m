@@ -66,11 +66,11 @@
 
 - (void) toggleSpeaker:(CDVInvokedUrlCommand*)command {
     if (self.activeCall) {
-        BOOL currentState = self.speakerOn;
-        currentState = !self.speakerOn;
-        [self toggleAudioRoute:currentState];
-        NSString *currentStateString = currentState ? @"true" : @"false";
-        [self returnSuccess:@"speakerToggled" :currentStateString];
+        BOOL newState = !self.speakerOn;
+        self.speakerOn = &(newState);
+        [self toggleAudioRoute:newState];
+        NSString *newStateString = newState ? @"true" : @"false";
+        [self returnSuccess:@"speakerToggled" :newStateString];
     }
 }
 
@@ -105,6 +105,11 @@
 }
 
 #pragma mark - TVOCallDelegate
+
+- (void)callDidStartRinging:(TVOCall *)call {
+    [self returnSuccess:@"statusChanged" :@"ringing"];
+}
+
 - (void)callDidConnect:(TVOCall *)call {
     [self returnSuccess:@"statusChanged" :@"connected"];
 }
@@ -113,22 +118,18 @@
     [self returnSuccess:@"statusChanged" :@"reconnecting"];
 }
 
-- (void)callDidReconnect:(TVOCall *)call {
-    [self returnSuccess:@"statusChanged" :@"reconnected"];
-}
-
 - (void)call:(TVOCall *)call didFailToConnectWithError:(NSError *)error {
-    NSLog(@"Call failed to connect: %@", error);
     [self returnSuccess:@"statusChanged" :@"connectFailure"];
+    self.activeCall = nil;
 }
 
 - (void)call:(TVOCall *)call didDisconnectWithError:(NSError *)error {
-    [self callDisconnected:call];
+    [self returnSuccess:@"statusChanged" :@"disconnected"];
+    self.activeCall = nil;
 }
 
-- (void)callDisconnected:(TVOCall *)call {
-    self.activeCall = nil;
-    [self returnSuccess:@"statusChanged" :@"disconnected"];
+- (void)callDidReconnect:(TVOCall *)call {
+    [self returnSuccess:@"statusChanged" :@"reconnected"];
 }
 
 #pragma mark - AVAudioSession
@@ -141,7 +142,8 @@
             if (![session overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:&error]) {
                 NSLog(@"Unable to reroute audio: %@", [error localizedDescription]);
             }
-        } else {
+        }
+        else {
             if (![session overrideOutputAudioPort:AVAudioSessionPortOverrideNone error:&error]) {
                 NSLog(@"Unable to reroute audio: %@", [error localizedDescription]);
             }
@@ -149,4 +151,5 @@
     };
     self.audioDevice.block();
 }
+
 @end
