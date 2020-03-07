@@ -8,7 +8,6 @@ TwilioVoice.prototype.on = function(name, callback) {
 }
 
 TwilioVoice.prototype.emit = function(name, params) {
-console.log('emit', name, params);
     if (this.callbacks.hasOwnProperty(name)) {
         this.callbacks[name](params);
     }
