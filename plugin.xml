@@ -20,4 +20,30 @@
         <framework src="com.twilio:voice-android:5.0.2" />
         <framework src="com.google.code.gson:gson:2.8.6" />
     </platform>
+    <platform name="ios">
+        <config-file target="config.xml" parent="widget">
+            <feature name="TwilioVoiceOutgoing">
+                <param name="ios-package" value="TwilioVoiceOutgoing" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <framework src="AVFoundation.framework" />
+
+        <config-file target="*-Info.plist" parent="NSMicrophoneUsageDescription">
+            <string>The app uses the microphone for voice calls</string>
+        </config-file>
+
+        <header-file src="src/ios/TwilioVoiceOutgoing.h" />
+        <source-file src="src/ios/TwilioVoiceOutgoing.m" />
+
+		<podspec>
+			<config>
+				<source url="https://cdn.cocoapods.org/"/>
+			</config>
+			<pods use-frameworks="true">
+                <pod name="TwilioVoice" version="5.2.0" />
+			</pods>
+		</podspec>
+    </platform>
 </plugin>

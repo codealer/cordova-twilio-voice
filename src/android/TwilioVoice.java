@@ -80,7 +80,11 @@ public class TwilioVoice extends CordovaPlugin {
 
     private void setToken(String token) {
         if (token != null && token.length() > 0) {
+            String currentToken = TwilioVoiceUtils.accessToken;
             TwilioVoiceUtils.accessToken = token;
+            if (currentToken == null) {
+                TwilioVoiceUtils.returnSuccess("initialized", token);
+            }
             TwilioVoiceUtils.returnSuccess("tokenSet", token);
         }
         else {
