@@ -25,18 +25,13 @@
 }
 
 - (void) setToken:(CDVInvokedUrlCommand*)command {
-    if (command.callbackId) {
-        self.jsCallbackId = command.callbackId;
-    }
-
+    self.jsCallbackId = command.callbackId;
     NSString *currentToken = nil;
     currentToken = self.accessToken;
     self.accessToken = command.arguments[0];
     if (self.accessToken) {
-        if (currentToken == nil) {
-            [self returnSuccess:@"initialized" :self.accessToken];
-        }
         [self returnSuccess:@"tokenSet" :self.accessToken];
+        [self returnSuccess:@"initialized" :self.accessToken];
     }
     else {
         [self returnError:@"token_missing" :@"Token parameter is missing" :@""];
@@ -44,6 +39,7 @@
 }
 
 - (void) connect:(CDVInvokedUrlCommand*)command {
+    self.jsCallbackId = command.callbackId;
     NSDictionary *params = command.arguments[0];
 
     [self.commandDelegate runInBackground:^{
@@ -59,12 +55,14 @@
 }
 
 - (void) disconnect:(CDVInvokedUrlCommand*)command {
+    self.jsCallbackId = command.callbackId;
     if (self.activeCall) {
         [self.activeCall disconnect];
     }
 }
 
 - (void) toggleSpeaker:(CDVInvokedUrlCommand*)command {
+    self.jsCallbackId = command.callbackId;
     if (self.activeCall) {
         BOOL newState = !self.speakerOn;
         self.speakerOn = &(newState);
@@ -75,6 +73,7 @@
 }
 
 - (void) toggleMute:(CDVInvokedUrlCommand*)command {
+    self.jsCallbackId = command.callbackId;
     if (self.activeCall) {
         self.activeCall.muted = !self.activeCall.muted;
         NSString *mutedString = self.activeCall.muted ? @"true" : @"false";
